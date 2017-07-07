@@ -28,19 +28,18 @@ public class User {
 	@GeneratedValue
 	@Column(unique = true)
 	private Long id;
-	private String name; // ime
-	private String surname; // prezime
-	private String email; // email korisnika
-	private String username; // korisnicko ime
-	private String password; // sifra korisnika
-	private Date createProfile; // datum registrovanja korisnika
+	private String name;
+	private String surname;
+	private String email;
+	private String username;
+	private String password;
+	private Date createProfile;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	private ProfileUser profilUser; // Dodatna polja za korisnik
+	private ProfileUser profilUser; //
 
 	@OneToOne(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
-	private UserRola userRola; // Rola korisnika
-
+	private UserRola userRola;
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
 	private Set<Account> account = new HashSet<Account>();
 

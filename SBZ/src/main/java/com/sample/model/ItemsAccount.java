@@ -27,17 +27,22 @@ public class ItemsAccount {
 	@Id
 	@GeneratedValue
 	private Long id;
-	private Double originalPrice; // originalna cena artikla
-	private int count; // kolicina koja se kupuje
-	private int discountPrecentage; // popust u procentima
-	private Double newPrice; // Nova cena sa uracunatim popustom
+	private int serialNum;
+	private double pricePerArticle;
+	private Double originalPrice;
+	private int count;
+	private int discountPrecentage;
+	private Double newPrice;
 
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	private Article article;
 
-	// Lista 
+	// Lista
 	@OneToMany(mappedBy = "itemsAccount", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
 	private Set<ListItemsAccount> listItemsAccount = new HashSet<ListItemsAccount>();
+
+	@OneToMany(mappedBy = "itemsAccount", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+	private Set<ItemsAccountDiscount> itemsAccountDiscount = new HashSet<ItemsAccountDiscount>();
 
 	public Long getId() {
 		return id;
@@ -93,6 +98,30 @@ public class ItemsAccount {
 
 	public void setListItemsAccount(Set<ListItemsAccount> listItemsAccount) {
 		this.listItemsAccount = listItemsAccount;
+	}
+
+	public int getSerialNum() {
+		return serialNum;
+	}
+
+	public void setSerialNum(int serialNum) {
+		this.serialNum = serialNum;
+	}
+
+	public double getPricePerArticle() {
+		return pricePerArticle;
+	}
+
+	public void setPricePerArticle(double pricePerArticle) {
+		this.pricePerArticle = pricePerArticle;
+	}
+
+	public Set<ItemsAccountDiscount> getItemsAccountDiscount() {
+		return itemsAccountDiscount;
+	}
+
+	public void setItemsAccountDiscount(Set<ItemsAccountDiscount> itemsAccountDiscount) {
+		this.itemsAccountDiscount = itemsAccountDiscount;
 	}
 
 }

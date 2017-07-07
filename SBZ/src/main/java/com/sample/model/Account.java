@@ -26,6 +26,10 @@ import javax.persistence.OneToMany;
 @Entity
 public class Account {
 
+	public enum accountState {
+		ORDERD, CANCELED, DONE
+	};
+
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -35,12 +39,19 @@ public class Account {
 	private int usedPoints;
 	private int earnedPoints;
 	private double procentDiscount;
+	private accountState state;
 
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	private User user;
 
 	@OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
 	private Set<ListItemsAccount> listItemsAccount = new HashSet<ListItemsAccount>();
+
+	@OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+	private Set<AccountDiscount> accountDiscount = new HashSet<AccountDiscount>();
+
+	@OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+	private Set<ItemsAccountDiscount> itemsAccountDiscount = new HashSet<ItemsAccountDiscount>();
 
 	public Long getId() {
 		return id;
@@ -112,6 +123,30 @@ public class Account {
 
 	public void setProcentDiscount(double procentDiscount) {
 		this.procentDiscount = procentDiscount;
+	}
+
+	public Set<AccountDiscount> getAccountDiscount() {
+		return accountDiscount;
+	}
+
+	public void setAccountDiscount(Set<AccountDiscount> accountDiscount) {
+		this.accountDiscount = accountDiscount;
+	}
+
+	public accountState getState() {
+		return state;
+	}
+
+	public void setState(accountState state) {
+		this.state = state;
+	}
+
+	public Set<ItemsAccountDiscount> getItemsAccountDiscount() {
+		return itemsAccountDiscount;
+	}
+
+	public void setItemsAccountDiscount(Set<ItemsAccountDiscount> itemsAccountDiscount) {
+		this.itemsAccountDiscount = itemsAccountDiscount;
 	}
 
 }
