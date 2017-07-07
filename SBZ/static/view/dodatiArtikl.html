@@ -1,0 +1,70 @@
+
+	<section class="content-header">
+		<h1>
+			Dodavanje novog artikla
+			<small>Dodavanje</small>
+		</h1>
+		<ol class="breadcrumb">
+			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+			<li><a href="#">Artikl</a></li>
+			<li class="active">Dodavanje</li>
+		</ol>
+	</section>
+
+	<!-- Ovde pocinje sve sto je u sredini -->
+	<section class="content">
+
+		<div class="box box-primary">
+			<div class="box-header with-border">
+				<h3 class="box-title">Unesite sve podatke</h3>
+			</div>
+			<!-- /.box-header -->
+			<!-- form start -->
+			<form role="form">
+				<div class="box-body">
+					<div class="form-group">
+						<label for="exampleInputEmail1">Naziv Artikla</label>
+						<input class="form-control" type="text" placeholder="Naziv artikla">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputEmail1">Cena Artikla</label>
+						<input class="form-control" type="text" placeholder="Cena artikla">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputEmail1">Kolicina Na lageru</label>
+						<input class="form-control" type="text" placeholder="Kolicina na lageru">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputEmail1">Minimalno Dozvoljeno Na Lageru</label>
+						<input class="form-control" type="text" placeholder="Minimalno dozvoljeno na lageru">
+					</div>
+					
+					<div class="form-group">
+						<label>Status Artikla</label>
+						<select class="form-control">
+							<option>Raspolozivo</option>
+							<option>Neraspolozivo</option>
+							
+						</select>
+					</div>
+					
+					<div class="form-group">
+						<label>Kategorija Artikla</label>
+						<select class="form-control">
+							<option>Dodajte</option>
+							<option ng-repeat="c in category" value="{{c.id}}">{{c.namePodCateogry}}</option>
+						</select>
+					</div>
+					
+				</div>
+				<!-- /.box-body -->
+
+				<div class="box-footer">
+					<button type="submit" ng-click="addArticle()" class="btn btn-primary">Dodajte</button>
+				</div>
+			</form>
+		</div>
+		<!-- /.box -->
+	
+
+	</section>

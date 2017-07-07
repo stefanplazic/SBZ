@@ -1,0 +1,39 @@
+<div >
+	<!-- Content Header (Page header) -->
+	<section class="content-header">
+		<h1>
+			Prikaz Artikala
+			<small>Artikli</small>
+		</h1>
+		<ol class="breadcrumb">
+			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+			<li class="active">Svi</li>
+			<li class="active">Artikli</li>
+		</ol>
+	</section>
+
+	<section class="content">
+		
+		<!-- Ovo se unmozaje -->
+		
+		<div ng-repeat="a in article">
+			<div style="margin: 0 2% 1% 0; box-shadow:2px 2px 3px 3px #C9C9C9; float: left; width: 250px; height: 270px">
+				
+				<div class="product-items" style="float: left;">
+					<div style="float: left;height: 200px; width: 100%; ">
+						<div id="nivo-lightbox-demo"> <p> <a href="images/pro1.jpg"data-lightbox-gallery="gallery1" id="nivo-lightbox-demo"><span class="rollover1"> </span> </a></p></div>     
+							<img style="height: 200px; width: 100%; margin: -3.5% 0 0 0" src="images/pro1.jpg" alt="">
+					</div>
+					<div style="float: left; width: 100%; height: 70px; margin: 0; text-align: center; background-color: #337AB7; color: #ffffff;">
+						<h4>{{a.nameArticle}}</h4>
+						<h5>256 $</h5>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		
+		
+	</section>
+	
+</div>
