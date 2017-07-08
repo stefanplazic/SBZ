@@ -20,6 +20,10 @@ public class UserRola {
 
 	@OneToOne(fetch = FetchType.LAZY)
 	private User user;
+	
+	public UserRola() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public Long getId() {
 		return id;

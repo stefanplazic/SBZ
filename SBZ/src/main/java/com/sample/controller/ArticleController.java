@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,111 +24,111 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.sample.dto.ArticleDTO;
 import com.sample.dto.MessagesDTO;
+import com.sample.dto.SearchArticleDTO;
 import com.sample.model.Article;
 import com.sample.model.SubCategory;
+import com.sample.model.User;
 import com.sample.repository.ArticleRepository;
-import com.sample.repository.PodCategoryRepository;
+import com.sample.repository.SubCategoryRepository;
+import com.sample.repository.UserRepository;
 
 @RestController
 @RequestMapping(value = "api/article")
 public class ArticleController {
 
 	@Autowired
-	private ArticleRepository articleResource;
-	
+	private ArticleRepository articleRepository;
+
 	@Autowired
-	private PodCategoryRepository podCategoryRepository;
-	
+	private SubCategoryRepository subCategoryRepository;
+
+	@Autowired
+	private UserRepository userRepository;
+
 	/*
 	 * Get new article
 	 */
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public ResponseEntity<List<ArticleDTO>> getAllCategory() {
-		
-		Page<Article> article = articleResource.findAll(new PageRequest(0, 10));
-		
+
+		Page<Article> article = articleRepository.findAll(new PageRequest(0, 10));
+
 		List<ArticleDTO> articleDTO = new ArrayList<>();
-		for(Article a: article) {
+		for (Article a : article) {
 			articleDTO.add(new ArticleDTO(a));
 		}
 		return new ResponseEntity<>(articleDTO, HttpStatus.OK);
 	}
-	
+
 	/*
 	 * Get one article
 	 */
 	@RequestMapping(value = "/new/{id}", method = RequestMethod.GET)
 	public ResponseEntity<ArticleDTO> getArticle(@PathVariable Long id) {
 
-		Article article = articleResource.findOne(id);
+		Article article = articleRepository.findOne(id);
 
-		
 		return new ResponseEntity<>(new ArticleDTO(article), HttpStatus.OK);
 	}
-	
+
 	/*
 	 * Get new article
 	 */
-	@RequestMapping(value = "/category/:id", method = RequestMethod.GET)
+	@RequestMapping(value = "/category/{id}", method = RequestMethod.GET)
 	public ResponseEntity<List<ArticleDTO>> getArticlCategory(@PathVariable Long id) {
-		
-		SubCategory podCategory = podCategoryRepository.findOne(id);
-		
-		List<Article> article = articleResource.findByPodCategory(podCategory);
-		
+
+		SubCategory podCategory = subCategoryRepository.findOne(id);
+
+		List<Article> article = articleRepository.findByPodCategory(podCategory);
+
 		List<ArticleDTO> articleDTO = new ArrayList<>();
-		for(Article a: article) {
+		for (Article a : article) {
 			articleDTO.add(new ArticleDTO(a));
 		}
 		return new ResponseEntity<>(articleDTO, HttpStatus.OK);
 	}
-	
-	
-	
-	
+
 	/*
 	 * Vraca broj svih artikala
 	 */
 	@RequestMapping(value = "/length", method = RequestMethod.GET)
 	public ResponseEntity<MessagesDTO> getAllLength() {
 		MessagesDTO messageDTO = new MessagesDTO();
-		List<Article> article = articleResource.findAll();
-		
+		List<Article> article = articleRepository.findAll();
+
 		messageDTO.setSize(article.size());
 		return new ResponseEntity<>(messageDTO, HttpStatus.OK);
 	}
-	
-	
+
 	/*
 	 * Get article discount
 	 */
 	@RequestMapping(value = "/discount", method = RequestMethod.GET)
 	public ResponseEntity<String> getAllDiscount() {
-		
-//		List<ArticleDiscount> articleDiscount = articleDiscountRepository.findAll();
-//		
-//		List<ArticleDiscountDTO> articleDiscountDTO = new ArrayList<>();
-//		for(ArticleDiscount ad: articleDiscount) {
-//			articleDiscountDTO.add(new ArticleDiscountDTO(ad));
-//		}
-		
-		return new ResponseEntity<>( HttpStatus.OK);
+
+		// List<ArticleDiscount> articleDiscount =
+		// articleDiscountRepository.findAll();
+		//
+		// List<ArticleDiscountDTO> articleDiscountDTO = new ArrayList<>();
+		// for(ArticleDiscount ad: articleDiscount) {
+		// articleDiscountDTO.add(new ArticleDiscountDTO(ad));
+		// }
+
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
+
 	/*
 	 * Add new article
 	 */
 	@RequestMapping(value = "/add/article", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<MessagesDTO> setArticle(@RequestBody ArticleDTO articleDTO) {
-		
-		
-		System.out.println("upao");
+
 		MessagesDTO messageDTO = new MessagesDTO();
-		
+
 		Date date = new Date();
-		
-		SubCategory podCategory = podCategoryRepository.findOne(articleDTO.getPodCategoryDTO().getId());
-		
+
+		SubCategory podCategory = subCategoryRepository.findOne(articleDTO.getPodCategoryDTO().getId());
+
 		Article artikle = new Article();
 		artikle.setNameArticle(articleDTO.getNameArticle());
 		artikle.setPrice(articleDTO.getPrice());
@@ -137,32 +138,62 @@ public class ArticleController {
 		artikle.setStatusRecord(true);
 		artikle.setMinState(articleDTO.getMinState());
 		artikle.setPodCategory(podCategory);
-		
-		articleResource.save(artikle);
-		
-		
+
+		articleRepository.save(artikle);
+
 		messageDTO.setMessage("save");
 		return new ResponseEntity<>(messageDTO, HttpStatus.OK);
 	}
-	
+
 	/**
-	 * Dodavanje nove slike 
+	 * Dodavanje nove slike
 	 */
 	@RequestMapping(value = "/slika/{id}", method = RequestMethod.POST)
-	public ResponseEntity<MessagesDTO> addImageByArticle(@RequestParam("file") MultipartFile file, @PathVariable Long id) throws IOException {
+	public ResponseEntity<MessagesDTO> addImageByArticle(@RequestParam("file") MultipartFile file,
+			@PathVariable Long id) throws IOException {
 
 		String nameArticle = file.getOriginalFilename();
 		if (!file.isEmpty()) {
 			byte[] bytes = file.getBytes();
-			
-            BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File("static/data/" + id + "/"+nameArticle)));
-            stream.write(bytes);
-            stream.close();
-            return new ResponseEntity<>( HttpStatus.OK);
+
+			BufferedOutputStream stream = new BufferedOutputStream(
+					new FileOutputStream(new File("static/data/" + id + "/" + nameArticle)));
+			stream.write(bytes);
+			stream.close();
+			return new ResponseEntity<>(HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>( HttpStatus.OK);
+			return new ResponseEntity<>(HttpStatus.OK);
 		}
-		
+
 	}
-	
+
+	/**
+	 * custemor search articles by hashCOde, category,name, and price range
+	 * 
+	 */
+	@RequestMapping(value = "/search", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity<List<ArticleDTO>> searchArticle(Principal principal,
+			@RequestBody SearchArticleDTO searchArticleDTO) {
+
+		// check if user is logged
+		User user = userRepository.findByUsername(principal.getName());
+		if (user == null)
+			return new ResponseEntity<List<ArticleDTO>>(HttpStatus.UNAUTHORIZED);
+
+		// if he is, search for article
+		// List<Article> articles =
+		// articleRepository.searchFor(searchArticleDTO.getProductCode(),
+		// searchArticleDTO.getName(), searchArticleDTO.getMaxPrice(),
+		// searchArticleDTO.getMinPrice());
+		List<Article> articles = articleRepository.searchFor(searchArticleDTO.getProductCode(),
+				searchArticleDTO.getName(), searchArticleDTO.getMinPrice(), searchArticleDTO.getMaxPrice());
+		List<ArticleDTO> articlesDto = new ArrayList<ArticleDTO>();
+
+		// populate articlesDto
+		for (Article a : articles)
+			articlesDto.add(new ArticleDTO(a));
+
+		return new ResponseEntity<List<ArticleDTO>>(articlesDto, HttpStatus.OK);
+	}
+
 }

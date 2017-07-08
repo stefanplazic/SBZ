@@ -98,16 +98,16 @@ public class UserController {
 		Date dt = new Date();
 		profileUser.setCountry("Srbija");
 		profileUser.setCity("Novi Sad");
-		profileUser.setStreet("Doktora Svetislava Kasapinovica");
+		profileUser.setStreet("Bulevar");
 		profileUser.setNumberStreet("21");
 		profileUser.setRewardPoints(0);
 		profileUserRepository.save(profileUser);
 
-		user.setName("Novica");
-		user.setSurname("Nikolic");
-		user.setEmail("nole0223@gmail.com");
-		user.setUsername("nole");
-		user.setPassword(encoder.encode("123"));
+		user.setName("Stefan");
+		user.setSurname("Plazic");
+		user.setEmail("stef@gmail.com");
+		user.setUsername("stefan");
+		user.setPassword(encoder.encode("stefan"));
 		user.setCreateProfile(dt);
 		user.setProfilUser(profileUser);
 		user.setProfilUser(null);
@@ -286,7 +286,7 @@ public class UserController {
 	 * on the system. Exist admin under user add new role.
 	 * @return
 	 */
-	@RequestMapping(value = "/soller/add/{{id}}", method = RequestMethod.GET)
+	@RequestMapping(value = "/seller/add/{{id}}", method = RequestMethod.GET)
 	public ResponseEntity<MessagesDTO> addSoller(@PathVariable Long id, Principal principal) {
 		
 		User role = userRepository.findByUsername(principal.getName());

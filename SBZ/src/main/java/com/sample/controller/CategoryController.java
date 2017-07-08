@@ -20,7 +20,7 @@ import com.sample.dto.PodCategoryDTO;
 import com.sample.model.CategoryArticle;
 import com.sample.model.SubCategory;
 import com.sample.repository.CategoryArticleRepository;
-import com.sample.repository.PodCategoryRepository;
+import com.sample.repository.SubCategoryRepository;
 
 @RestController
 @RequestMapping(value = "api/category")
@@ -30,7 +30,7 @@ public class CategoryController {
 	private CategoryArticleRepository categoryRepositry;
 	
 	@Autowired
-	private PodCategoryRepository subCategoryRepository;
+	private SubCategoryRepository subCategoryRepository;
 	
 	/*
 	 * Get all category

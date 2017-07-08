@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.sample.model.CategoryArticle;
 import com.sample.model.SubCategory;
 
-public interface PodCategoryRepository extends JpaRepository<SubCategory, Long> {
+public interface SubCategoryRepository extends JpaRepository<SubCategory, Long> {
 
 	List<SubCategory> findByCategoryArticle(CategoryArticle categoryArticle);
 

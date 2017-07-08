@@ -10,6 +10,7 @@ public class ArticleDTO {
 
 	private Long id;
 	private String nameArticle;
+	private String productCode;
 	private Double price;
 	private int amount;
 	private Date dataAddArticle;
@@ -23,12 +24,13 @@ public class ArticleDTO {
 	public ArticleDTO() {
 	}
 
-	public ArticleDTO(Long id, String nameArticle, Double price, int amount, Date dataAddArticle, boolean complement,
-			boolean statusRecord, int minState, PodCategoryDTO podCategoryDTO, Set<ItemsAccountDTO> atemsAccountDTO,
-			Set<CartDTO> cartDTO) {
+	public ArticleDTO(Long id, String nameArticle, String productCode, Double price, int amount, Date dataAddArticle,
+			boolean complement, boolean statusRecord, int minState, PodCategoryDTO podCategoryDTO,
+			Set<ItemsAccountDTO> atemsAccountDTO, Set<CartDTO> cartDTO) {
 		super();
 		this.id = id;
 		this.nameArticle = nameArticle;
+		this.productCode = productCode;
 		this.price = price;
 		this.amount = amount;
 		this.dataAddArticle = dataAddArticle;
@@ -49,6 +51,7 @@ public class ArticleDTO {
 		this.complement = article.isComplement();
 		this.statusRecord = article.isStatusRecord();
 		this.minState = article.getMinState();
+		this.productCode = article.getProductCode();
 		if (article.getPodCategory() != null)
 			this.podCategoryDTO = new PodCategoryDTO(article.getPodCategory());
 	}
@@ -139,6 +142,14 @@ public class ArticleDTO {
 
 	public void setCartDTO(Set<CartDTO> cartDTO) {
 		this.cartDTO = cartDTO;
+	}
+
+	public String getProductCode() {
+		return productCode;
+	}
+
+	public void setProductCode(String productCode) {
+		this.productCode = productCode;
 	}
 
 }

@@ -29,6 +29,10 @@ public class Role {
 
 	@OneToMany(mappedBy = "role", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
 	private Set<UserRola> userRole = new HashSet<UserRola>();
+	
+	public Role() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public Set<UserRola> getUserRole() {
 		return userRole;

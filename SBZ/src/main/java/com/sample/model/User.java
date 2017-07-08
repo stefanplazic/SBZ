@@ -13,14 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-/**
- * Profil svih registrovanih na sajtu Ukoliko je registrovan korisnik aplikacije
- * on ima dodtnu tabelu sa podacima gde treba da se posalje naruceni artikl
- * 
- * @author X
- *
- */
-
 @Entity
 public class User {
 
@@ -51,6 +43,10 @@ public class User {
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
 	private Set<Cart> cart = new HashSet<Cart>();
+
+	public User() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public Long getId() {
 		return id;
