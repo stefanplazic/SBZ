@@ -31,6 +31,7 @@ import com.sample.model.User;
 import com.sample.repository.ArticleRepository;
 import com.sample.repository.SubCategoryRepository;
 import com.sample.repository.UserRepository;
+import com.sample.service.ArticleService;
 
 @RestController
 @RequestMapping(value = "api/article")
@@ -44,6 +45,9 @@ public class ArticleController {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private ArticleService articleService;
 
 	/*
 	 * Get new article
@@ -77,9 +81,9 @@ public class ArticleController {
 	@RequestMapping(value = "/category/{id}", method = RequestMethod.GET)
 	public ResponseEntity<List<ArticleDTO>> getArticlCategory(@PathVariable Long id) {
 
-		SubCategory podCategory = subCategoryRepository.findOne(id);
+		SubCategory subCategory = subCategoryRepository.findOne(id);
 
-		List<Article> article = articleRepository.findByPodCategory(podCategory);
+		List<Article> article = articleRepository.findByPodCategory(subCategory);
 
 		List<ArticleDTO> articleDTO = new ArrayList<>();
 		for (Article a : article) {
@@ -180,16 +184,8 @@ public class ArticleController {
 		if (user == null)
 			return new ResponseEntity<List<ArticleDTO>>(HttpStatus.UNAUTHORIZED);
 
-		// if he is, search for article
-		// List<Article> articles =
-		// articleRepository.searchFor(searchArticleDTO.getProductCode(),
-		// searchArticleDTO.getName(), searchArticleDTO.getMaxPrice(),
-		// searchArticleDTO.getMinPrice());
-		List<Article> articles = articleRepository.searchFor(searchArticleDTO.getProductCode(),
-				searchArticleDTO.getName(), searchArticleDTO.getMinPrice(), searchArticleDTO.getMaxPrice());
 		List<ArticleDTO> articlesDto = new ArrayList<ArticleDTO>();
-
-		// populate articlesDto
+		List<Article> articles = articleService.searchFor(searchArticleDTO);
 		for (Article a : articles)
 			articlesDto.add(new ArticleDTO(a));
 

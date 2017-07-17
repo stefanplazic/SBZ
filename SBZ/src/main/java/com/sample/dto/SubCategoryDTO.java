@@ -6,24 +6,24 @@ import java.util.Set;
 import com.sample.model.Article;
 import com.sample.model.SubCategory;
 
-public class PodCategoryDTO {
+public class SubCategoryDTO {
 
 	private Long id;
 	private String namePodCateogry;
 	private CategoryArticleDTO categoryArticleDTO;
 	private Set<Article> article = new HashSet<Article>();
 
-	public PodCategoryDTO() {
+	public SubCategoryDTO() {
 	}
 
-	public PodCategoryDTO(Long id, String namePodCateogry, CategoryArticleDTO categoryArticleDTO) {
+	public SubCategoryDTO(Long id, String namePodCateogry, CategoryArticleDTO categoryArticleDTO) {
 		super();
 		this.id = id;
 		this.namePodCateogry = namePodCateogry;
 		this.categoryArticleDTO = categoryArticleDTO;
 	}
 
-	public PodCategoryDTO(SubCategory podCategory) {
+	public SubCategoryDTO(SubCategory podCategory) {
 		this.id = podCategory.getId();
 		this.namePodCateogry = podCategory.getName();
 		if (podCategory.getCategoryArticle() != null)

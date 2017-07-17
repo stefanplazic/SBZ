@@ -17,7 +17,7 @@ public class ArticleDTO {
 	private boolean complement;
 	private boolean statusRecord;
 	private int minState;
-	private PodCategoryDTO podCategoryDTO;
+	private SubCategoryDTO podCategoryDTO;
 	private Set<ItemsAccountDTO> atemsAccountDTO = new HashSet<ItemsAccountDTO>();
 	private Set<CartDTO> cartDTO = new HashSet<CartDTO>();
 
@@ -25,7 +25,7 @@ public class ArticleDTO {
 	}
 
 	public ArticleDTO(Long id, String nameArticle, String productCode, Double price, int amount, Date dataAddArticle,
-			boolean complement, boolean statusRecord, int minState, PodCategoryDTO podCategoryDTO,
+			boolean complement, boolean statusRecord, int minState, SubCategoryDTO podCategoryDTO,
 			Set<ItemsAccountDTO> atemsAccountDTO, Set<CartDTO> cartDTO) {
 		super();
 		this.id = id;
@@ -53,7 +53,7 @@ public class ArticleDTO {
 		this.minState = article.getMinState();
 		this.productCode = article.getProductCode();
 		if (article.getPodCategory() != null)
-			this.podCategoryDTO = new PodCategoryDTO(article.getPodCategory());
+			this.podCategoryDTO = new SubCategoryDTO(article.getPodCategory());
 	}
 
 	public Long getId() {
@@ -120,11 +120,11 @@ public class ArticleDTO {
 		this.minState = minState;
 	}
 
-	public PodCategoryDTO getPodCategoryDTO() {
+	public SubCategoryDTO getPodCategoryDTO() {
 		return podCategoryDTO;
 	}
 
-	public void setPodCategoryDTO(PodCategoryDTO podCategoryDTO) {
+	public void setPodCategoryDTO(SubCategoryDTO podCategoryDTO) {
 		this.podCategoryDTO = podCategoryDTO;
 	}
 

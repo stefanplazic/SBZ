@@ -8,8 +8,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -61,40 +59,38 @@ public class UserController {
 
 	@Autowired
 	private UserDetailsService userDetailsService;
-	
 
 	MessagesDTO messagesDTO = new MessagesDTO();
 
 	/**
 	 * Create first user of system
-	 * @return
-	 * radi
+	 * 
+	 * @return radi
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ResponseEntity<String> getFirstUser() {
-		
+
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		
+
 		Role role = new Role();
 		User user = new User();
 		UserRola userRola = new UserRola();
 		ProfileUser profileUser = new ProfileUser();
-		
+
 		String[] roles = { "USER", "MENAGER", "ADMIN" };
-		
-		//Cuvanje rola na sistem
-		for(int i=0; i<roles.length; i++) {
+
+		// Cuvanje rola na sistem
+		for (int i = 0; i < roles.length; i++) {
 			Role r = roleRepository.findByName(roles[i]);
-			if(r == null) {
+			if (r == null) {
 				role = new Role();
 				role.setName(roles[i]);
 				roleRepository.save(role);
 			}
 		}
-		
+
 		roleRepository.save(role);
-		
-		
+
 		Date dt = new Date();
 		profileUser.setCountry("Srbija");
 		profileUser.setCity("Novi Sad");
@@ -118,14 +114,13 @@ public class UserController {
 		userRola.setUser(user);
 		userRoleRepository.save(userRola);
 
-		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Create list for all User ours application
-	 * @return
-	 * radi
+	 * 
+	 * @return radi
 	 */
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public ResponseEntity<List<UserDTO>> allUser() {
@@ -135,14 +130,14 @@ public class UserController {
 		for (User u : user) {
 			userDTO.add(new UserDTO(u));
 		}
-		
+
 		return new ResponseEntity<>(userDTO, HttpStatus.OK);
 	}
 
 	/**
-	 * Login User 
-	 * @return
-	 * radi
+	 * Login User
+	 * 
+	 * @return radi
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ResponseEntity<MessagesDTO> loginUser(@RequestBody LoginDTO loginDTO) {
@@ -154,15 +149,12 @@ public class UserController {
 		}
 
 		try {
-			UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-					loginDTO.getUsername(), loginDTO.getPassword());
-			Authentication authentication = authenticationMenager
-					.authenticate(token);
-			SecurityContextHolder.getContext()
-					.setAuthentication(authentication);
+			UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginDTO.getUsername(),
+					loginDTO.getPassword());
+			Authentication authentication = authenticationMenager.authenticate(token);
+			SecurityContextHolder.getContext().setAuthentication(authentication);
 
-			UserDetails details = userDetailsService
-					.loadUserByUsername(loginDTO.getUsername());
+			UserDetails details = userDetailsService.loadUserByUsername(loginDTO.getUsername());
 
 			messagesDTO.setJwt(tokenUtils.generateToken(details));
 			messagesDTO.setRole(user.getUserRola().getRole().getName());
@@ -179,8 +171,7 @@ public class UserController {
 	 * Registration new users. User saving own personal date and address.
 	 */
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
-	public ResponseEntity<MessagesDTO> registrationUser(
-			@RequestBody UserDTO userDTO) {
+	public ResponseEntity<MessagesDTO> registrationUser(@RequestBody UserDTO userDTO) {
 
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		User user = new User();
@@ -214,23 +205,24 @@ public class UserController {
 		messagesDTO.setMessage("registration");
 		return new ResponseEntity<MessagesDTO>(HttpStatus.OK);
 	}
-	
+
 	/**
-	 * Registration new Admin of system. New addmin must be registered 
-	 * on the system. Exist admin under user add new role.
+	 * Registration new Admin of system. New addmin must be registered on the
+	 * system. Exist admin under user add new role.
+	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "/admin/add/{{id}}", method = RequestMethod.GET)
 	public ResponseEntity<MessagesDTO> addAdmin(@PathVariable Long id, Principal principal) {
-		
+
 		User role = userRepository.findByUsername(principal.getName());
-		if(role.getUserRola().getRole().getName().equals("ADMIN")) {
+		if (role.getUserRola().getRole().getName().equals("ADMIN")) {
 			messagesDTO.setError("admin");
 			return new ResponseEntity<MessagesDTO>(messagesDTO, HttpStatus.OK);
 		}
-		
+
 		User user = userRepository.findOne(id);
-		if(user == null) {
+		if (user == null) {
 			messagesDTO.setError("user.no");
 			return new ResponseEntity<MessagesDTO>(messagesDTO, HttpStatus.OK);
 		}
@@ -238,37 +230,37 @@ public class UserController {
 		UserRola userRole = userRoleRepository.findByUser(user);
 		userRole.setRole(r);
 		userRoleRepository.save(userRole);
-		
+
 		messagesDTO.setMessage("admin.update");
 		return new ResponseEntity<MessagesDTO>(messagesDTO, HttpStatus.OK);
 	}
-	
-	
-	
+
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
 	public ResponseEntity<UserDTO> profile(Principal principal) {
-		
+
 		User user = userRepository.findByUsername(principal.getName());
-		
+
 		return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
 	}
-	
+
 	/**
-	 * Registration new Menager of system. New menager must be registered 
-	 * on the system. Exist admin under user add new role.
+	 * Registration new Menager of system. New menager must be registered on the
+	 * system. Exist admin under user add new role.
+	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "/menager/add/{{id}}", method = RequestMethod.GET)
 	public ResponseEntity<MessagesDTO> addMenager(@PathVariable Long id, Principal principal) {
-		
+
 		User role = userRepository.findByUsername(principal.getName());
-		if(role.getUserRola().getRole().getName().equals("ADMIN") || role.getUserRola().getRole().getName().equals("MENAGER")) {
+		if (role.getUserRola().getRole().getName().equals("ADMIN")
+				|| role.getUserRola().getRole().getName().equals("MENAGER")) {
 			messagesDTO.setError("admin");
 			return new ResponseEntity<MessagesDTO>(messagesDTO, HttpStatus.OK);
 		}
-		
+
 		User user = userRepository.findOne(id);
-		if(user == null) {
+		if (user == null) {
 			messagesDTO.setError("user.no");
 			return new ResponseEntity<MessagesDTO>(messagesDTO, HttpStatus.OK);
 		}
@@ -276,27 +268,28 @@ public class UserController {
 		UserRola userRole = userRoleRepository.findByUser(user);
 		userRole.setRole(r);
 		userRoleRepository.save(userRole);
-		
+
 		messagesDTO.setMessage("menager.update");
 		return new ResponseEntity<MessagesDTO>(messagesDTO, HttpStatus.OK);
 	}
-	
+
 	/**
-	 * Registration new SALLER of system. New saller must be registered 
-	 * on the system. Exist admin under user add new role.
+	 * Registration new SALLER of system. New saller must be registered on the
+	 * system. Exist admin under user add new role.
+	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "/seller/add/{{id}}", method = RequestMethod.GET)
 	public ResponseEntity<MessagesDTO> addSoller(@PathVariable Long id, Principal principal) {
-		
+
 		User role = userRepository.findByUsername(principal.getName());
-		if(role.getUserRola().getRole().getName().equals("MENAGER")) {
-			messagesDTO.setError("admin");
+		if (role.getUserRola().getRole().getName().equals("MENAGER")) {
+			messagesDTO.setError("Admin only can register sellers!");
 			return new ResponseEntity<MessagesDTO>(messagesDTO, HttpStatus.OK);
 		}
-		
+
 		User user = userRepository.findOne(id);
-		if(user == null) {
+		if (user == null) {
 			messagesDTO.setError("user.no");
 			return new ResponseEntity<MessagesDTO>(messagesDTO, HttpStatus.OK);
 		}
@@ -304,52 +297,53 @@ public class UserController {
 		UserRola userRole = userRoleRepository.findByUser(user);
 		userRole.setRole(r);
 		userRoleRepository.save(userRole);
-		
+
 		messagesDTO.setMessage("menager.update");
 		return new ResponseEntity<MessagesDTO>(messagesDTO, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Edit our profile
+	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public ResponseEntity<MessagesDTO> edditProfile(@RequestBody UserDTO userDTO, Principal principal) {
-		
+
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		
+
 		User user = userRepository.findByUsername(principal.getName());
-		if(user == null) {
+		if (user == null) {
 			messagesDTO.setError("login");
 			return new ResponseEntity<MessagesDTO>(messagesDTO, HttpStatus.OK);
 		}
-		
+
 		user.setName(userDTO.getName());
 		user.setEmail(user.getEmail());
 		user.setPassword(encoder.encode(userDTO.getPassword()));
 		user.setSurname(userDTO.getSurname());
 		user.setUsername(userDTO.getUsername());
-		
+
 		userRepository.save(user);
-		this.logout(principal);
-		
+
 		messagesDTO.setMessage("save");
 		return new ResponseEntity<MessagesDTO>(messagesDTO, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Edit Profile users
+	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "/edit/profile", method = RequestMethod.POST)
 	public ResponseEntity<MessagesDTO> edditProfile(@RequestBody ProfileUserDTO profileUserDTO, Principal principal) {
-		
+
 		User user = userRepository.findByUsername(principal.getName());
-		if(user == null) {
+		if (user == null) {
 			messagesDTO.setError("login");
 			return new ResponseEntity<MessagesDTO>(messagesDTO, HttpStatus.OK);
 		}
-		
+
 		ProfileUser profileUser = profileUserRepository.findOne(user.getProfilUser().getId());
 
 		profileUser.setCity(profileUserDTO.getCity());
@@ -357,46 +351,11 @@ public class UserController {
 		profileUser.setNumberStreet(profileUserDTO.getNumberStreet());
 		profileUser.setRewardPoints(profileUserDTO.getRewardPoints());
 		profileUser.setStreet(profileUserDTO.getStreet());
-		
+
 		profileUserRepository.save(profileUser);
-		
+
 		messagesDTO.setMessage("save");
 		return new ResponseEntity<MessagesDTO>(messagesDTO, HttpStatus.OK);
 	}
-	
-	
-	/**
-	 * Logoutn user
-	 * @return
-	 */
-	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public ResponseEntity<MessagesDTO> logout(Principal principal) {
-		
-		
-		
-		User user = userRepository.findByUsername(principal.getName());
-		if(user == null) {
-			messagesDTO.setError("login");
-			return new ResponseEntity<MessagesDTO>(messagesDTO, HttpStatus.OK);
-		}
-		
-		
-        //treba implementirati
 
-		
-		messagesDTO.setMessage("logout");
-		return new ResponseEntity<MessagesDTO>(messagesDTO, HttpStatus.OK);
-	}
-	
-	@RequestMapping(value = "/size", method = RequestMethod.GET)
-	public ResponseEntity<MessagesDTO> size() {
-
-		List<User> user = userRepository.findAll();
-		System.out.println("dosao: "+user.size());
-		messagesDTO.setSize(user.size());
-		return new ResponseEntity<MessagesDTO>(messagesDTO, HttpStatus.OK);
-	}
-	
-	
-	
 }

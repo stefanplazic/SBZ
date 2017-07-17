@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sample.dto.CategoryArticleDTO;
 import com.sample.dto.MessagesDTO;
-import com.sample.dto.PodCategoryDTO;
+import com.sample.dto.SubCategoryDTO;
 import com.sample.model.CategoryArticle;
 import com.sample.model.SubCategory;
 import com.sample.repository.CategoryArticleRepository;
@@ -35,7 +35,7 @@ public class CategoryController {
 	/*
 	 * Get all category
 	 */
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public ResponseEntity<List<CategoryArticleDTO>> getAllCategory() {
 		
 		List<CategoryArticle> category = categoryRepositry.findAll();
@@ -49,13 +49,13 @@ public class CategoryController {
 	}
 	
 	@RequestMapping(value = "/subCategory", method = RequestMethod.GET)
-	public ResponseEntity<List<PodCategoryDTO>> getAllPodCategory() {
+	public ResponseEntity<List<SubCategoryDTO>> getAllPodCategory() {
 		
 		List<SubCategory> podCategory = subCategoryRepository.findAll();
 		
-		List<PodCategoryDTO> podCategoryDTO = new ArrayList<>();
+		List<SubCategoryDTO> podCategoryDTO = new ArrayList<>();
 		for(SubCategory pc: podCategory){
-			podCategoryDTO.add(new PodCategoryDTO(pc));
+			podCategoryDTO.add(new SubCategoryDTO(pc));
 		}
 		
 		return new ResponseEntity<>(podCategoryDTO, HttpStatus.OK);
@@ -63,15 +63,15 @@ public class CategoryController {
 	
 	
 	@RequestMapping(value = "/subCategory/{id}", method = RequestMethod.GET)
-	public ResponseEntity<List<PodCategoryDTO>> getPodcategoryByCategory(@PathVariable Long id) {
+	public ResponseEntity<List<SubCategoryDTO>> getPodcategoryByCategory(@PathVariable Long id) {
 		
 		CategoryArticle categoryArticle = categoryRepositry.findOne(id);
 		
 		List<SubCategory> podCategory = subCategoryRepository.findByCategoryArticle(categoryArticle);
 		
-		List<PodCategoryDTO> podCategoryDTO = new ArrayList<>();
+		List<SubCategoryDTO> podCategoryDTO = new ArrayList<>();
 		for(SubCategory pc: podCategory){
-			podCategoryDTO.add(new PodCategoryDTO(pc));
+			podCategoryDTO.add(new SubCategoryDTO(pc));
 		}
 		
 		return new ResponseEntity<>(podCategoryDTO, HttpStatus.OK);
@@ -99,7 +99,7 @@ public class CategoryController {
 	
 	
 	@RequestMapping(value = "/creat/subcategory", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<MessagesDTO> setArticle(@RequestBody PodCategoryDTO podCategoryDTO) {
+	public ResponseEntity<MessagesDTO> setArticle(@RequestBody SubCategoryDTO podCategoryDTO) {
 		
 		
 		

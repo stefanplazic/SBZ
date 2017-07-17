@@ -16,7 +16,7 @@ public class CategoryArticleDTO {
 	public CategoryArticleDTO() {
 	}
 
-	public CategoryArticleDTO(Long id, String nameCategory, PodCategoryDTO podCategoryDTO, Set<ArticleDTO> articleDTO,
+	public CategoryArticleDTO(Long id, String nameCategory, SubCategoryDTO podCategoryDTO, Set<ArticleDTO> articleDTO,
 			Set<ListActionCategoryDTO> listActionCategoryDTO) {
 		super();
 		this.id = id;

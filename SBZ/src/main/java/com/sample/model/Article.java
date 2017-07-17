@@ -45,7 +45,7 @@ public class Article {
 	private Set<OrderArticle> orders = new HashSet<OrderArticle>();
 
 	@OneToMany(mappedBy = "article", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-	private Set<Cart> cart = new HashSet<Cart>();
+	private Set<CartItem> cartItems = new HashSet<CartItem>();
 
 	public Article() {
 		// TODO Auto-generated constructor stub
@@ -57,6 +57,14 @@ public class Article {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getProductCode() {
+		return productCode;
+	}
+
+	public void setProductCode(String productCode) {
+		this.productCode = productCode;
 	}
 
 	public String getNameArticle() {
@@ -87,8 +95,8 @@ public class Article {
 		return creationDate;
 	}
 
-	public void setCreationDate(Date dataAddArticle) {
-		this.creationDate = dataAddArticle;
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
 	}
 
 	public boolean isComplement() {
@@ -115,20 +123,20 @@ public class Article {
 		this.minState = minState;
 	}
 
-	public Set<ItemsAccount> getAtemsAccount() {
-		return atemsAccount;
-	}
-
-	public void setAtemsAccount(Set<ItemsAccount> atemsAccount) {
-		this.atemsAccount = atemsAccount;
-	}
-
 	public SubCategory getPodCategory() {
 		return podCategory;
 	}
 
 	public void setPodCategory(SubCategory podCategory) {
 		this.podCategory = podCategory;
+	}
+
+	public Set<ItemsAccount> getAtemsAccount() {
+		return atemsAccount;
+	}
+
+	public void setAtemsAccount(Set<ItemsAccount> atemsAccount) {
+		this.atemsAccount = atemsAccount;
 	}
 
 	public Set<OrderArticle> getOrders() {
@@ -139,20 +147,12 @@ public class Article {
 		this.orders = orders;
 	}
 
-	public Set<Cart> getCart() {
-		return cart;
+	public Set<CartItem> getCartItems() {
+		return cartItems;
 	}
 
-	public void setCart(Set<Cart> cart) {
-		this.cart = cart;
-	}
-
-	public String getProductCode() {
-		return productCode;
-	}
-
-	public void setProductCode(String productCode) {
-		this.productCode = productCode;
+	public void setCartItems(Set<CartItem> cartItems) {
+		this.cartItems = cartItems;
 	}
 
 }
