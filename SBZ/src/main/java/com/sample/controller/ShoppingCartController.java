@@ -21,31 +21,28 @@ public class ShoppingCartController {
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private CartRepository cartRepository;
-	
+
 	@RequestMapping(value = "/addItem", method = RequestMethod.POST)
 	public ResponseEntity<MessagesDTO> getAllCategory(Principal principal) {
 		User user = userRepository.findByUsername(principal.getName());
 		MessagesDTO dto = new MessagesDTO();
-		if(user==null || !user.getUserRola().getRole().getName().equalsIgnoreCase("USER"))
-		{
+		if (user == null || !user.getUserRola().getRole().getName().equalsIgnoreCase("USER")) {
 			dto.setError("Must be logged as customer!");
 			return new ResponseEntity<MessagesDTO>(HttpStatus.UNAUTHORIZED);
 		}
-		
-		//get the cart if exists
+
+		// get the cart if exists
 		Cart myCart = cartRepository.findByUser(user);
-		
-		if(myCart == null){
-			//if cart is null
+
+		if (myCart == null) {
+			// if cart is null
 			myCart = new Cart();
-			
-			
-			
+
 		}
-		
+
 		return new ResponseEntity<MessagesDTO>(HttpStatus.OK);
 	}
 }
