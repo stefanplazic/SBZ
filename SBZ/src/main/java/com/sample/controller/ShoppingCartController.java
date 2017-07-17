@@ -42,6 +42,8 @@ public class ShoppingCartController {
 			//if cart is null
 			myCart = new Cart();
 			
+			
+			
 		}
 		
 		return new ResponseEntity<MessagesDTO>(HttpStatus.OK);
