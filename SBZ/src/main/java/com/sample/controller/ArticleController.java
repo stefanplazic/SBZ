@@ -45,7 +45,7 @@ public class ArticleController {
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private ArticleService articleService;
 
@@ -132,6 +132,17 @@ public class ArticleController {
 		Date date = new Date();
 
 		SubCategory podCategory = subCategoryRepository.findOne(articleDTO.getPodCategoryDTO().getId());
+		// check if subcategory already exists
+		if (podCategory == null) {
+			messageDTO.setError("Given subcategory doesn't exists!");
+			return new ResponseEntity<>(messageDTO, HttpStatus.BAD_REQUEST);
+		}
+
+		// check if article with give productcode already exists
+		if (articleService.findByProductCode(articleDTO.getProductCode())!= null) {
+			messageDTO.setError("Article with that productCode already exists!");
+			return new ResponseEntity<>(messageDTO, HttpStatus.CONFLICT);
+		}
 
 		Article artikle = new Article();
 		artikle.setNameArticle(articleDTO.getNameArticle());
@@ -141,6 +152,7 @@ public class ArticleController {
 		artikle.setComplement(true);
 		artikle.setStatusRecord(true);
 		artikle.setMinState(articleDTO.getMinState());
+		artikle.setProductCode(articleDTO.getProductCode());
 		artikle.setPodCategory(podCategory);
 
 		articleRepository.save(artikle);

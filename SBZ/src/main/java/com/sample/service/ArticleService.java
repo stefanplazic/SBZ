@@ -44,4 +44,8 @@ public class ArticleService {
 
 		return articles;
 	}
+
+	public Article findByProductCode(String productCode) {
+		return repository.findByProductCode(productCode);
+	}
 }

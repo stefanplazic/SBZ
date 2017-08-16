@@ -21,6 +21,9 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
 	@Query("Select a from Article as a where a.productCode = :productCode OR a.nameArticle = :name OR (a.price >= :minPrice AND a.price <= :maxPrice) OR a.podCategory.id = :categoryId")
 	List<Article> searchFor(@Param("productCode") String productCode, @Param("name") String name,
-			@Param("minPrice") double minPrice, @Param("maxPrice") double maxPrice, @Param("categoryId") Long categoryId);
+			@Param("minPrice") double minPrice, @Param("maxPrice") double maxPrice,
+			@Param("categoryId") Long categoryId);
+
+	Article findByProductCode(String productCode);
 
 }
