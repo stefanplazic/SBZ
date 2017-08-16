@@ -12,17 +12,19 @@ public class CategoryArticleDTO {
 	private String nameCategory;
 	private Set<ArticleDTO> articleDTO = new HashSet<ArticleDTO>();
 	private Set<ListActionCategoryDTO> listActionCategoryDTO = new HashSet<ListActionCategoryDTO>();
-
+	private String code;
+	
 	public CategoryArticleDTO() {
 	}
 
 	public CategoryArticleDTO(Long id, String nameCategory, SubCategoryDTO podCategoryDTO, Set<ArticleDTO> articleDTO,
-			Set<ListActionCategoryDTO> listActionCategoryDTO) {
+			Set<ListActionCategoryDTO> listActionCategoryDTO, String code) {
 		super();
 		this.id = id;
 		this.nameCategory = nameCategory;
 		this.articleDTO = articleDTO;
 		this.listActionCategoryDTO = listActionCategoryDTO;
+		this.code = code;
 	}
 
 	public CategoryArticleDTO(CategoryArticle categoryArticle) {
@@ -34,6 +36,7 @@ public class CategoryArticleDTO {
 				this.listActionCategoryDTO.add(new ListActionCategoryDTO(lac));
 			}
 		}
+		this.code = categoryArticle.getCodeCategory();
 	}
 
 	public Long getId() {
@@ -68,4 +71,12 @@ public class CategoryArticleDTO {
 		this.listActionCategoryDTO = listActionCategoryDTO;
 	}
 
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+	
 }

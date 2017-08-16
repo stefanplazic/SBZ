@@ -98,7 +98,7 @@ public class CategoryController {
 	
 	
 	
-	@RequestMapping(value = "/creat/subcategory", method = RequestMethod.POST, consumes = "application/json")
+	@RequestMapping(value = "/create/subcategory", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<MessagesDTO> setArticle(@RequestBody SubCategoryDTO podCategoryDTO) {
 		
 		
@@ -106,10 +106,21 @@ public class CategoryController {
 		MessagesDTO messageDTO = new MessagesDTO();
 		
 		CategoryArticle category = categoryRepositry.findOne(podCategoryDTO.getCategoryArticleDTO().getId());
+		//check if category exists
+		if(category == null){
+			messageDTO.setError("No such category!");
+			return new ResponseEntity<>(messageDTO, HttpStatus.BAD_REQUEST);
+		}
+		//check if subCategory with given code already exists
+		if(subCategoryRepository.findBySubCode(podCategoryDTO.getSubCode())!= null){
+			messageDTO.setError("Subcategory with given code already exists!");
+			return new ResponseEntity<>(messageDTO, HttpStatus.CONFLICT);
+		}
 		
 		SubCategory podCategory = new SubCategory();
 		podCategory.setName(podCategoryDTO.getNamePodCateogry());
 		podCategory.setCategoryArticle(category);
+		podCategory.setSubCode(podCategoryDTO.getSubCode());
 		
 		subCategoryRepository.save(podCategory);
 
@@ -127,6 +138,14 @@ public class CategoryController {
 		
 		CategoryArticle categoryArticle = new CategoryArticle();
 		categoryArticle.setNameCategory(categoryArticleDTO.getNameCategory());
+		categoryArticle.setCodeCategory(categoryArticleDTO.getCode());
+		
+		//check if code allready exists
+		if(categoryRepositry.findByCodeCategory(categoryArticleDTO.getCode())!= null)
+		{
+			messageDTO.setError("Category with that code allready exists!");
+			return new ResponseEntity<>(messageDTO, HttpStatus.CONFLICT);
+		}
 		
 		categoryRepositry.save(categoryArticle);
 		

@@ -12,15 +12,17 @@ public class SubCategoryDTO {
 	private String namePodCateogry;
 	private CategoryArticleDTO categoryArticleDTO;
 	private Set<Article> article = new HashSet<Article>();
+	private String subCode;
 
 	public SubCategoryDTO() {
 	}
 
-	public SubCategoryDTO(Long id, String namePodCateogry, CategoryArticleDTO categoryArticleDTO) {
+	public SubCategoryDTO(Long id, String namePodCateogry, CategoryArticleDTO categoryArticleDTO, String subCode) {
 		super();
 		this.id = id;
 		this.namePodCateogry = namePodCateogry;
 		this.categoryArticleDTO = categoryArticleDTO;
+		this.subCode = subCode;
 	}
 
 	public SubCategoryDTO(SubCategory podCategory) {
@@ -28,6 +30,7 @@ public class SubCategoryDTO {
 		this.namePodCateogry = podCategory.getName();
 		if (podCategory.getCategoryArticle() != null)
 			this.categoryArticleDTO = new CategoryArticleDTO(podCategory.getCategoryArticle());
+		this.subCode = podCategory.getSubCode();
 	}
 
 	public Long getId() {
@@ -60,6 +63,14 @@ public class SubCategoryDTO {
 
 	public void setArticle(Set<Article> article) {
 		this.article = article;
+	}
+
+	public String getSubCode() {
+		return subCode;
+	}
+
+	public void setSubCode(String subCode) {
+		this.subCode = subCode;
 	}
 
 }

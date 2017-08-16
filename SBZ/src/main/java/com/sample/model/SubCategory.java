@@ -24,6 +24,7 @@ public class SubCategory {
 	@GeneratedValue
 	private Long id;
 	private String name;
+	private String subCode;
 	
 	@OneToMany(mappedBy = "podCategory", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
 	private Set<Article> article = new HashSet<Article>();
@@ -53,6 +54,22 @@ public class SubCategory {
 
 	public void setCategoryArticle(CategoryArticle categoryArticle) {
 		this.categoryArticle = categoryArticle;
+	}
+
+	public String getSubCode() {
+		return subCode;
+	}
+
+	public void setSubCode(String subCode) {
+		this.subCode = subCode;
+	}
+
+	public Set<Article> getArticle() {
+		return article;
+	}
+
+	public void setArticle(Set<Article> article) {
+		this.article = article;
 	}
 
 }

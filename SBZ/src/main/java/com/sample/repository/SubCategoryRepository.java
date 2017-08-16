@@ -10,5 +10,5 @@ import com.sample.model.SubCategory;
 public interface SubCategoryRepository extends JpaRepository<SubCategory, Long> {
 
 	List<SubCategory> findByCategoryArticle(CategoryArticle categoryArticle);
-
+	SubCategory findBySubCode(String subCode);
 }
