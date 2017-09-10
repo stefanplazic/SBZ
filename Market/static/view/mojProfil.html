@@ -1,41 +1,67 @@
-<div class="col-sm-9 padding-right">
-	<div class="features_items"><!--features_items-->
-		<h2 class="title text-center">Moj Profil</h2>
-		
-		<div class="product-details"><!--product-details-->
-			<div class="col-sm-5">
-				<div class="view-product">
-					<img src="css/images/home/novica.jpg" alt="" />
-					<h3>ZOOM</h3>
-				</div>
-				
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+		
+		<!-- ARTICLE -->
+			
+
+		<div class="box box-primary">
+			<div class="box-header with-border">
+				<h3 class="box-title">Profile</h3>
 			</div>
-			<div class="col-sm-7">
-				<div class="product-information"><!--/product-information-->
-					
-					<h2>{{profil.name}} {{profil.surname}}</h2>
-					<p>Person ID: {{profil.id}}</p>
-					<br/>
-					<span ng-if="profil.profilUserDTO.categoryUserDTO != null">
-						<span>Kategorija profila</span>
-						<label>Broj besplatnih tokena: DIN</label>
-						<input type="text" value="{{profil.profilUserDTO.rewardPoints}}" />
+			
+			
+			
+			<!-- /.box-header -->
+			<!-- form start -->
+			<form role="form">
+				<div class="box-body">
+					<div class="form-group">
+						<h2>{{profil.name}} {{profil.surname}}</h2>
+		
+						<br/>
+						<span ng-if="profil.profilUserDTO.categoryUserDTO != null">
+						<br/>
+						<label>Number of tokens: <b>{{profil.profilUserDTO.rewardPoints}}</b></label>
+						
 					</span>
+					</div>
 					
-					<p><b>email:</b> {{profil.email}}</p>
-					<p><b>datum kreiranja:</b>{{profil.createProfile | date:'medium'}}</p>
+					<div class="form-group">
+						<p><b>email:</b> {{profil.email}}</p>
+					<p><b>Date of join:</b>{{profil.createProfile | date:'medium'}}</p>
 					
 					<br/>
-					<p><b>Drzava:</b> {{profil.profilUserDTO.country}}</p>
-					<p><b>Grad:</b> {{profil.profilUserDTO.city}}</p>
-					<p><b>Adresa:</b> {{profil.profilUserDTO.street}} {{profil.profilUserDTO.numberStreet}}</p>
-					<p><b>Mobilni:</b> {{profil.profilUserDTO.mobile}}</p>
+					<p><b>State:</b> {{profil.profilUserDTO.country}}</p>
+					<p><b>City:</b> {{profil.profilUserDTO.city}}</p>
+					<p><b>Address:</b> {{profil.profilUserDTO.street}} {{profil.profilUserDTO.numberStreet}}</p>
+					</div>
 					
-					<button ng-click="setting()" class="btn btn-default">Podesavanje</button>
-					<button ng-click="address()" class="btn btn-default">Podesavanje adrese</button>
-				</div><!--/product-information-->
-			</div>
-		</div><!--/product-details-->
-	</div><!--features_items-->
-</div>
+					
+				</div>
+				<!-- /.box-body -->
+
+				<div class="box-footer">
+				
+				</div>
+			</form>
+		</div>
+		<!-- /.box -->
+	
+
+
+		
+
+
