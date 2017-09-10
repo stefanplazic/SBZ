@@ -184,7 +184,71 @@
           </a>
          
         </li>
-	
+		
+		<!-- SEARCH THING -->
+		<li>
+		
+		<div  ng-controller="SearchCtrl"><!--brands_products-->
+							<h2>Search</h2>
+							<div ng-controller="ArtikliAddCtrl"><!--login form-->
+			
+								
+								
+								
+								
+								
+								
+								
+						</div><!--/brands_products-->
+						<div ng-controller="ArtikliAddCtrl">
+						
+						<form role="form">
+				<div class="box-body">
+					<div class="form-group">
+						<label for="exampleInputEmail1">Article name</label>
+						<input class="form-control" type="text" ng-model="search.nameArticle" placeholder="Article name">
+					</div>
+					
+					
+					
+					<div class="form-group">
+						<label> Category</label>
+						<select class="form-control" ng-model="id" ng-click="radi()">
+							<option  value="" >Choose category</option>
+							<option  ng-repeat="c in category" value="{{c.id}}" >{{c.nameCategory}}</option>
+						</select>
+					</div>
+					
+					<div class="form-group" ng-if="podcategory != ''">
+						<label> Subcategory</label>
+						<select class="form-control" ng-model="search.podcategory">
+							<option  value="" >Choose subcategory</option>
+							<option  ng-repeat="c in podcategory" value="{{c.id}}" >{{c.namePodCateogry}}</option>
+						</select>
+					</div>
+					
+					<div class="form-group">
+						<label for="exampleInputEmail1">Min price</label>
+						<input class="form-control" type="text" ng-model="search.minCena">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputEmail1">Max price</label>
+						<input class="form-control" type="text" ng-model="search.maxCena">
+					</div>
+					
+				</div>
+				<!-- /.box-body -->
+
+				
+					<button type="submit" ng-click="pretraga()" class="btn btn-primary">Search</button>
+				
+			</form>
+			</div>
+						</div>
+		
+		</li>
+		
+		<!-- END OF SERACH THING -->
 		 
 		
       </ul>
