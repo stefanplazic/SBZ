@@ -166,6 +166,31 @@
       
       <!-- Korisnikce komande -->
       
+  
+      <ul class="sidebar-menu" ng-if="getCurrentUserRole()&&getCurrentUserRole()== 'prazno' || getCurrentUserRole()&&getCurrentUserRole()== 'USER'" ng-controller="KontrolerCtrl">
+        <li class="header">Navigacioni Panel</li>
+		
+		
+		
+		
+		
+		
+        <li data-ng-repeat="k in kategorije">
+          <a href="">
+             <span><a href="#/user/{{k.id}}/{{k.nameCategory}}">{{k.nameCategory}}</a></span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+         
+        </li>
+	
+		 
+		
+      </ul>
+      
+      
+      
       <ul class="sidebar-menu" ng-if="getCurrentUserRole()&&getCurrentUserRole()!='USER' && getCurrentUserRole()&&getCurrentUserRole()!='prazno'">
         
 		

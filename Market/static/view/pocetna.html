@@ -1,183 +1,33 @@
 
 
-<div class="col-sm-9 padding-right">
-	<div class="features_items" ng-controller="AddToCart"><!--features_items-->
-		<h2 class="title text-center">Sve Artikle</h2>
+<div ng-controller="AddToCart">
+
+<section class="content">
+
+<h2 class="title text-center">List of all articles</h2>
 		
-		<div class="spinner" ng-show="loading">
-			<div class="loader" ></div>
-		</div>
-		
+		<!-- Ovo se unmozaje -->
 		
 		<div data-ng-repeat="a in artikli">
-			<div class="col-sm-4">
-				<div class="product-image-wrapper" >
-
-					<div class="single-products" >
-							<div class="productinfo text-center">
-								<img src="image/artikli/{{a.id}}.jpg" alt="" />
-								<h2>{{a.price}}</h2>
-								<p>{{a.nameArticle}}</p>
-								<a href="" ng-click="addCart(a.id)" id="1" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Dodati u korpu</a>
-							</div>
-							<div class="product-overlay">
-								<div class="overlay-content">
-									<h2>{{a.price}}</h2>
-									<p>{{a.nameArticle}}</p>
-									<a href="" ng-click="addCart(a.id)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Dodati u korpu</a>
-								</div>
-							</div>
-					</div>
-					<div class="choose">
-						<ul class="nav nav-pills nav-justified">
-							<li><a href="#/article/{{a.id}}"><i class="fa fa-plus-square"></i>Pogledajte Artikl</a></li>
-							<li><a href="" ng-click="addCart(a.id)"><i class="fa fa-plus-square"></i>Dodajte U Korpu</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-		
-	</div><!--features_items-->
-	
-	
-	<div class="category-tab" ng-controller="TabController"><!--category-tab-->
-		<div class="col-sm-12" >
-			<ul class="nav nav-tabs">
-				<li  ng-class="{active: isSet(1)}"><a href="" ng-click="setTab(1)" data-toggle="tab">TV</a></li>
-				<li  ng-class="{active: isSet(2)}"><a href="" ng-click="setTab(2)" data-toggle="tab">Laptop</a></li>
-				<li  ng-class="{active: isSet(3)}"><a href="" ng-click="setTab(3)" data-toggle="tab">Desktop</a></li>
-				<li  ng-class="{active: isSet(4)}"><a href="" ng-click="setTab(4)" data-toggle="tab">Nesto</a></li>
-			</ul>
-		</div>
-		<div class="tab-content" ng-controller="AddToCart">
-		
-		
-		
-			<!--  Kontroleri koji iscitavaju ove tabove nalaze se z tab-ctrl.js -->
-			<div ng-show="isSet(1)" class="tab-pane fade active in" >
-			
-				<div data-ng-repeat="a in artiklKategorije1">
-					<div class="col-sm-3">
-						<div class="product-image-wrapper">
-							<div class="single-products">
-								<div class="productinfo text-center">
-									<a style="width: 100px; height: 200px" href="#/article/{{a.id}}"><img src="/image/artikli/{{a.id}}.jpg" alt="" /></a>
-									<h2>${{a.price}}</h2>
-									<p>{{a.nameArticle}}</p>
-									<a href="" ng-click="addCart(a.id)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Dodati u korpu</a>
-								</div>
-								
-							</div>
-						</div>
-					</div>
-				</div>
+			<div style="margin: 0 2% 1% 0; box-shadow:2px 2px 3px 3px #C9C9C9; float: left; width: 250px; height: 270px">
 				
-			</div>
-			
-			
-			
-			
-			<div ng-show="isSet(2)" class="tab-pane fade active in" >
-			
-				<div data-ng-repeat="a in artiklKategorije2">
-					<div class="col-sm-3">
-						<div class="product-image-wrapper">
-							<div class="single-products">
-								<div class="productinfo text-center">
-									<a href="#/article/{{a.id}}"><img src="./css/images/home/gallery4.jpg" alt="" /></a>
-									<h2>${{a.price}}</h2>
-									<p>{{a.nameArticle}}</p>
-									<a href="" ng-click="addCart(a.id)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Dodati u korpu</a>
-								</div>
-								
-							</div>
-						</div>
+				<div class="product-items" style="float: left;">
+					<div style="float: left;height: 200px; width: 100%; ">
+						<div id="nivo-lightbox-demo"> <p> <a href="images/pro1.jpg"data-lightbox-gallery="gallery1" id="nivo-lightbox-demo"><span class="rollover1"> </span> </a></p></div>     
+							<img style="height: 200px; width: 100%; margin: -3.5% 0 0 0" src="images/pro1.jpg" alt="">
 					</div>
-				</div>
-			</div>
-			
-			
-			
-			<div ng-show="isSet(3)" class="tab-pane fade active in" id="sunglass" >
-			
-				<!-- Deo za jednu kategoriju -->
-				<!-- Ovaj deo ide u forperlju -->
-				<div data-ng-repeat="a in artiklKategorije3">
-					<div class="col-sm-3">
-						<div class="product-image-wrapper">
-							<div class="single-products">
-								<div class="productinfo text-center">
-									<a href="#/article/{{a.id}}"><img src="./css/images/home/gallery3.jpg" alt="" /></a>
-									<h2>${{a.price}}</h2>
-									<p>{{a.nameArticle}}</p>
-									<a href="" ng-click="addCart(a.id)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Dodati u korpu</a>
-								</div>
-								
-							</div>
-						</div>
+					<div style="float: left; width: 100%; height: 70px; margin: 0; text-align: center; background-color: #337AB7; color: #ffffff;">
+						<h4>{{a.nameArticle}}</h4>
+						<h5>{{a.price}} $</h5>
+						<a href="" ng-click="addCart(a.id)" id="1" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 					</div>
-				</div>
-			</div>
-			
-			
-			
-			
-			<div ng-show="isSet(4)" class="tab-pane fade active in" id="kids" >
-			
-				<!-- Treba srediti da upadne neka kategorija -->
-				<!-- Ovaj deo ide u forpetlju -->
-				<div data-ng-repeat="a in artiklKategorije4">
-					<div class="col-sm-3">
-						<div class="product-image-wrapper">
-							<div class="single-products">
-								<div class="productinfo text-center">
-									<a href="#/article/{{a.id}}"><img src="./css/images/home/gallery1.jpg" alt="" /></a>
-									<h2>${{a.price}}</h2>
-									<p>{{a.nameArticle}}</p>
-									<a href="" ng-click="addCart(a.id)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Dodati u korpu</a>
-								</div>
-								
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			
-			
-			
-		</div>
-	</div><!--/category-tab-->
-	
-	
-	<div class="recommended_items"><!--recommended_items-->
-		<h2 class="title text-center">Proizvodi na popustu</h2>
-		
-		<div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
-			<div class="carousel-inner">
-				<div class="item active">
 					
-					<!-- Ovaj deo ide u forpetlju -->
-					<div data-ng-repeat="a in artikliPopust">
-						<div class="col-sm-4">
-							<div class="product-image-wrapper">
-								<div class="single-products" ng-controller="AddToCart">
-									<div class="productinfo text-center">
-										<a href="#/article/{{a.id}}"><img src="./css/images/home/recommend1.jpg" alt="" /></a>
-										<h2>$ {{a.price}}</h2>
-										<p>{{a.nameArticle}}</p>
-										<a href="" ng-click="addCart(a.id)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-									</div>
-									
-								</div>
-							</div>
-						</div>
-					</div>
 				</div>
 				
 			</div>
-			 		
 		</div>
-	</div><!--/recommended_items-->
+		
+		
+	</section>
 	
-</div>
+	</div>
