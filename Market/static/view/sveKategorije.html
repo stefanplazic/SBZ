@@ -1,7 +1,7 @@
 
 <div class="col-sm-9 padding-right">
 	<div class="features_items"><!--features_items-->
-		<h2 class="title text-center">Pregled Svih Kategorija</h2>
+		<h2 class="title text-center">Cateogory list</h2>
 
 		<section id="cart_items">
 			<div class="container">
@@ -10,10 +10,10 @@
 					<table class="table table-condensed" style="width: 850px">
 						<thead>
 							<tr class="cart_menu">
-								<td class="image">Naziv Kategorije</td>
+								<td class="image">Category name</td>
 								<td class="description"></td>
-								<td class="price">Broj Artikala Kategorije</td>
-								<td class="price">Akcija</td>
+								<td class="price">Num of articles in category</td>
+								<td class="price">Discounts</td>
 							</tr>
 						</thead>
 						
@@ -31,7 +31,7 @@
 								</td>
 								
 								<td ng-if="c.listActionCategoryDTO[0].actionEventDTO.nameAction == null" class="cart_price">
-									<p>Nema Akcije</p>
+									<p>Sorry. No discount :(</p>
 								</td>
 								
 								<td ng-if="c.listActionCategoryDTO[0].actionEventDTO.nameAction != null" class="cart_price">
