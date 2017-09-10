@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appSBZ">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Home | Buy me</title>
+    <link rel="stylesheet" href="script/calendar/dhtmlxscheduler.css" type="text/css"  title="no title" charset="utf-8">
+    
+    <link href="css/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/css/prettyPhoto.css" rel="stylesheet">
+    <link href="css/css/price-range.css" rel="stylesheet">
+    <link href="css/css/animate.css" rel="stylesheet">
+	<link href="css/css/main.css" rel="stylesheet">
+	<link href="css/css/responsive.css" rel="stylesheet">
+	<link href="css/load.css" rel="stylesheet">
+	   
+	<style type="text/css">
+	
+		#dodatak {
+		height: 100%
+		}
+		#dodatak:hover {
+			background: #FE980F;
+			color: #FFF;
+			
+		}
+	
+	</style>
+	
+</head><!--/head-->
+
+<body>
+	<header id="header"><!--header-->
+				
+		<div class="header-middle"><!--header-middle-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-4">
+						<div class="logo pull-left">
+							<a href="#/"><img src="css/images/home/logo.png" alt="" /></a>
+						</div>
+					</div>
+					<div class="col-sm-8">
+						<div class="shop-menu pull-right">
+							<ul class="nav navbar-nav" ng-controller="ShopCartCtrl">
+								<li ng-if="isLoggedIn()"><a href="#/profile/{{getCurrentUserName().username}}"><i class="fa fa-user"></i> {{getCurrentUserName().name}} {{getCurrentUserName().surname}}</a></li>
+								<li ng-if="getCurrentUserRole()&&getCurrentUserRole()=='USER' || getCurrentUserRole()&&getCurrentUserRole()==null"><a href="#/finis/account"><i class="fa fa-crosshairs"></i> Your orders</a></li>
+								<li ng-if="getCurrentUserRole()&&getCurrentUserRole()=='USER'"><a href="#/cart"><i class="fa fa-shopping-cart"></i> My cart <i ng-show="allCart != null" >({{allCartIndex.listItemsAccountDTO.length}})</i></a></li>
+								
+			
+								<li ng-if="!isLoggedIn()"><a href="#/login"><i class="fa fa-lock"></i> Login</a></li>
+								<li ng-if="isLoggedIn()"><a href="" ng-click="logout()"><i class="fa fa-lock"></i> Log out</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!--/header-middle-->
+	
+		<div class="header-bottom"><!--header-bottom-->
+			
+		</div><!--/header-bottom-->
+	</header><!--/header-->
+	
+	
+	
+	
+
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					
+				
+					<div class="left-sidebar" ng-if="getCurrentUserRole()&&getCurrentUserRole()!='USER' && getCurrentUserRole()&&getCurrentUserRole()!='prazno'">
+						<h2>Dashboard</h2>
+						<div class="panel-group category-products" id="accordian"><!--category-productsr-->
+							
+							<div class="panel panel-default" id="dodatak" style="border: 1px solid #F7F7F0; margin: -6% 0 0 0; min-height: 35px">
+								<div class="panel-heading " >
+									<h4 class="panel-title"><a href="#/private">Home</a></h4>
+								</div>
+							</div>
+							
+							<div class="panel panel-default" id="dodatak" style="border: 1px solid #F7F7F0; min-height: 35px">
+								<div class="panel-heading">
+									<h4 class="panel-title"><a href="#/private/add/article">Add article</a></h4>
+								</div>
+							</div>
+							
+							<div class="panel panel-default" id="dodatak" style="border: 1px solid #F7F7F0; min-height: 35px">
+								<div class="panel-heading">
+									<h4 class="panel-title"><a href="#/private/add/category">Add category</a></h4>
+								</div>
+							</div>
+							<div class="panel panel-default" id="dodatak" style="border: 1px solid #F7F7F0; min-height: 35px">
+								<div class="panel-heading" >
+									<h4 class="panel-title"><a href="#/private/add/podcategory">Add subcategory</a></h4>
+								</div>
+							</div>
+							
+							<div class="panel panel-default" id="dodatak" style="border: 1px solid #F7F7F0; min-height: 35px">
+								<div class="panel-heading">
+									<h4 class="panel-title"><a href="#/private/action/event">Create promotion</a></h4>
+								</div>
+							</div>
+							
+							
+							<div class="panel panel-default" id="dodatak" style="border: 1px solid #F7F7F0; min-height: 35px">
+								<div class="panel-heading">
+									<h4 class="panel-title"><a href="#/private/all/category">View categories</a></h4>
+								</div>
+							</div>
+							
+							<div class="panel panel-default" id="dodatak" style="border: 1px solid #F7F7F0; min-height: 35px">
+								<div class="panel-heading">
+									<h4 class="panel-title"><a href="#/private/spending">Consumption Threshold</a></h4>
+								</div>
+							</div>
+							
+							<div class="panel panel-default" id="dodatak" style="border: 1px solid #F7F7F0; min-height: 35px">
+								<div class="panel-heading">
+									<h4 class="panel-title"><a href="#/private/all/article/">View articles</a></h4>
+								</div>
+							</div>
+							<div ng-controller="ArtiklNedostajeCtrl" class="panel panel-default" id="dodatak" style="border: 1px solid #F7F7F0; min-height: 35px">
+								<div class="panel-heading">
+									<h4 class="panel-title"><a href="#/private/list/complement">View Complements (<span style="color: red; font-style: italic; font-size: 24px" ng-show="article.length != 0">{{article.length}}</span>)</a></h4>
+								</div>
+							</div>
+							<div class="panel panel-default" id="dodatak" style="border: 1px solid #F7F7F0; min-height: 35px">
+								<div class="panel-heading">
+									<h4 class="panel-title"><a href="#/private/list/cart">Accounts</a></h4>
+								</div>
+							</div>
+							
+						</div><!--/category-products-->
+
+					</div>
+					
+					
+					
+					
+					<div ng-controller="KontrolerCtrl" class="left-sidebar" ng-if="getCurrentUserRole()&&getCurrentUserRole()== 'prazno' || getCurrentUserRole()&&getCurrentUserRole()== 'USER'">
+						<h2>Categories</h2>
+						<div class="panel-group category-products" id="accordian"><!--category-productsr-->
+							
+							<!--  Ovde ide nesto  -->
+							
+							<div class="panel panel-default" id="dodatak" style="border: 1px solid #F7F7F0; margin: -6% 0 0 0; min-height: 35px">
+								<div class="panel-heading " >
+									<h4 class="panel-title"><a href="#/">Home</a></h4>
+								</div>
+							</div>
+							
+							<!-- Treba u kategorija-ctrl.js ispraviti metodu koja vraca 
+								 Sve kategorije iz baze -->
+							<div >
+								<div data-ng-repeat="k in kategorije" class="panel panel-default" id="dodatak" style="border: 1px solid #F7F7F0; min-height: 35px">
+									<div  class="panel-heading " >
+										<h4  class="panel-title"><a href="#/user/{{k.id}}/{{k.nameCategory}}">{{k.nameCategory}}</a></h4>
+									</div>
+								</div>
+								<div class="panel panel-default" id="dodatak" style="border: 1px solid #F7F7F0; min-height: 35px">
+									<div  class="panel-heading " >
+										<h4  class="panel-title"><a href="#/user/category">All categories</a></h4>
+									</div>
+								</div>
+							</div>
+							
+							
+						</div><!--/category-products-->
+						
+						<div class="brands_products" ng-controller="SearchCtrl"><!--brands_products-->
+							<h2>Search</h2>
+							<div class="login-form" ng-controller="ArtikliAddCtrl"><!--login form-->
+			
+								<form >
+									<input type="text" ng-model="search.nameArticle" placeholder="naziv artikla" />
+									<select class="form-control" ng-model="id" ng-click="radi()" style="background: #F0F0E9;border: medium none;color: #696763;display: block;
+														font-family: 'Roboto', sans-serif;font-size: 14px;font-weight: 300;height: 40px;
+														margin-bottom: 10px;outline: medium none;padding-left: 10px;width: 100%;">
+										<option  value="" >Choose  category</option>
+										<option  ng-repeat="c in category" value="{{c.id}}" >{{c.nameCategory}}</option>
+									</select>
+									<div ng-if="podcategory != ''">
+										<select class="form-control" ng-model="search.podcategory" style="background: #F0F0E9;border: medium none;color: #696763;display: block;
+																			font-family: 'Roboto', sans-serif;font-size: 14px;font-weight: 300;height: 40px;
+																			margin-bottom: 10px;outline: medium none;padding-left: 10px;width: 100%;">
+											<option  value="" >Choose sub category</option>
+											<option  ng-repeat="c in podcategory" value="{{c.id}}" >{{c.namePodCateogry}}</option>
+										</select>
+									
+									</div>
+									
+									<input type="text" ng-model="search.minCena" placeholder="min price" />
+									<input type="text" ng-model="search.maxCena" placeholder="max price" />
+									<button type="submit" ng-click="pretraga()" class="btn btn-default">Search</button>
+								</form>
+								
+								
+							</div><!--/login form-->
+						</div><!--/brands_products-->
+						
+						
+
+					</div>
+					
+					
+				</div>
+				
+				
+				<!-- Ovde ide glavni deo -->
+				
+				
+				<div ng-view="">
+				
+				</div>
+				
+				
+			</div>
+		</div>
+	</section>
+	
+	<footer id="footer"><!--Footer-->
+		<div class="footer-top">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-2">
+						<div class="companyinfo">
+							<h2><span>e</span>-Buy me</h2>
+						</div>
+					</div>
+					
+					
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		<div class="footer-bottom">
+			<div class="container">
+				<div class="row">
+					
+					<p class="pull-right">Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum</a></span></p>
+				</div>
+			</div>
+		</div>
+		
+	</footer><!--/Footer-->
+	
+
+  
+    <script src="css/js/jquery.js"></script>
+	<script src="css/js/bootstrap.min.js"></script>
+	<script src="css/js/jquery.scrollUp.min.js"></script>
+	<script src="css/js/price-range.js"></script>
+    <script src="css/js/jquery.prettyPhoto.js"></script>
+    <script src="css/js/main.js"></script>
+
+    
+    
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/lodash/lodash.js"></script>
+    <script src="bower_components/restangular/dist/restangular.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/angular-lodash-module/angular-lodash-module.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/ng-storage/ngStorage.js"></script>
+    
+    	
+    
+    <script src="script/app.js"></script>
+    <script src="script/login-ctrl.js"></script>
+    <script src="script/authentication.js"></script>
+    <script src="script/tab-ctrl.js"></script>
+    <script src="script/kategorija/kategorija-ctrl.js"></script>
+    <script src="script/kategorija/kategorija-resource.js"></script>
+    <script src="script/artikli/artikli-ctrl.js"></script>
+    <script src="script/artikli/artikli-resources.js"></script>
+    <script src="script/admin/procent-ctrl.js"></script>
+    <script src="script/admin/procent-resource.js"></script>
+    <script src="script/admin/artikli/artikli-admin-ctrl.js"></script>
+    <script src="script/admin/artikli/artikli-admin-resource.js"></script>
+    <script src="script/admin/kategorija/kategorija-admin-ctrl.js"></script>
+    <script src="script/admin/kategorija/kategorija-admin-resource.js"></script>
+    <script src="script/cart/cart-ctrl.js"></script>
+    <script src="script/cart/cart-resources.js"></script>
+    <script src="script/admin/event/event-ctrl.js"></script>
+    <script src="script/admin/event/event-resource.js"></script>
+    <script src="script/admin/prag/prag-ctrl.js"></script>
+    <script src="script/admin/prag/prag-resource.js"></script>
+    <script src="script/admin/cart/cart-admin-ctrl.js"></script>
+    <script src="script/admin/cart/cart-admin-resource.js"></script>
+    
+    
+</body>
+</html>

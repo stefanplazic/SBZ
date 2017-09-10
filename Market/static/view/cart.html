@@ -1,0 +1,93 @@
+<div class="col-sm-9 padding-right" >
+
+	<div class="spinner" ng-show="loading">
+		<div class="loader" ></div>
+	</div>
+	
+<section id="cart_items" >
+	<div class="container" style="width: 100%">
+		<div class="breadcrumbs">
+			<ol class="breadcrumb">
+			  <li><a href="#">Home</a></li>
+			  <li class="active">Shopping Cart</li>
+			</ol>
+		</div>
+		<div class="table-responsive cart_info" >
+			<table class="table table-condensed">
+				<thead>
+					<tr class="cart_menu">
+						<td class="image">Article</td>
+						<td class="description"></td>
+						<td class="price">Price</td>
+						<td class="quantity">Quantity</td>
+						<td class="total">Total</td>
+						<td></td>
+					</tr>
+				</thead>
+				<tbody >
+				
+				
+					<tr data-ng-repeat="a in allCart.listItemsAccountDTO | orderBy:'id'">
+						<td class="cart_product">
+							<a href=""><img src="css/images/cart/one.png" alt=""></a>
+						</td>
+						<td class="cart_description">
+							<h4><a href="">{{a.itemsAccountDTO.articleDTO.nameArticle}}</a></h4>
+							<p>Web ID: {{a.itemsAccountDTO.articleDTO.id}}</p>
+						</td>
+						<td class="cart_price">
+							<p>${{a.itemsAccountDTO.articleDTO.price}}</p>
+						</td>
+						<td class="cart_quantity">
+							<div class="cart_quantity_button">
+								<a class="cart_quantity_up" href=""  data-ng-click="plas(a.itemsAccountDTO.id, allCart.id)" > + </a>
+								<input class="cart_quantity_input" type="text" name="quantity" value="{{a.itemsAccountDTO.count}}" autocomplete="off" size="2">
+								<a class="cart_quantity_down" href="" data-ng-click="minus(a.itemsAccountDTO.id, allCart.id)"> - </a>
+							</div>
+						</td>
+						<td class="cart_total">
+							<p class="cart_total_price">${{a.itemsAccountDTO.articleDTO.price * a.itemsAccountDTO.count}}</p>
+						</td>
+						<td class="cart_delete">
+							<a class="cart_quantity_delete" href="" ng-click="deleteA(a.itemsAccountDTO.id, allCart.id)"><i class="fa fa-times"></i></a>
+						</td>
+					</tr>
+
+					
+					
+				</tbody>
+			</table>
+		</div>
+	</div>
+</section > <!--/#cart_items-->
+
+	<section id="do_action" >
+		<div class="container" style="width: 100%">
+			<div class="heading">
+				<h3>Payment account with all taxes calculated</h3>
+			</div>
+			
+			<div class="col-sm-6" style="width: 850px">
+				<div class="total_area">
+					<ul>
+						<li style="color: blue;">Reword points <span>${{bodovi}}</span></li>
+						<br>
+						<h3 style="text-align: center;">Orders details</h3>
+						<li>Original price <span>${{ allCart.originalPrice }}</span></li>
+						<li>Your discounts <span>${{ allCart.originalPrice -  allCart.newPrice}}</span></li>
+						<li>Total discount <span>${{ popustArtikala() }}</span></li>
+						<li>Total without taxes <span>${{ allCart.newPrice - ((allCart.newPrice * 21) / 100) }}</span></li>
+						<li>Taxes <span>21%</span></li>
+						<li>Total <span>${{ allCart.newPrice }}</span></li>
+						
+					</ul>
+						<a class="btn btn-default update"  data-ng-click="kupiti(allCart.id)">Accept</a> <a class="btn btn-default update">Decline</a>
+				</div>
+			</div>
+			
+			
+		</div>
+	</section>
+
+
+</div>

@@ -1,0 +1,45 @@
+package rules.racun.zlatni;
+ 
+import com.sample.model.ItemsAccount;
+ 
+
+rule "Popust na stavke - vise od 20"
+    when
+
+        $i : ItemsAccount( (ItemsAccount.Article.PodCategory.CategoryArticle.sirokePotrosnje == false) && (count >= 20), p :  newPrice )
+        
+    then
+    	$i.setDiscountPrecentage(20);
+    	$i.setNewPrice(p - ((p*20)/100));
+        System.out.println( "siroke potrosnje" );
+        
+
+end
+
+
+rule "Popust na stavke - vise od 5000din"
+    when
+
+        $i : ItemsAccount( (ItemsAccount.Article.PodCategory.CategoryArticle.sirokePotrosnje == true) && (newPrice >= 5000), p : newPrice )
+        
+    then
+    	$i.setDiscountPrecentage(7);
+    	$i.setNewPrice(p - ((p*7)/100));
+        System.out.println( "siroke potrosnje" );
+end
+
+
+
+rule "Popust na stavke - vise od 5 artikala iz kategorija - televizor, racunar, laptopovi"
+
+	when
+		$i : ItemsAccount((ItemsAccount.Article.PodCategory.CategoryArticle.nameCategory.equalsIgnoreCase("televizor")|| ItemsAccount.Article.PodCategory.CategoryArticle.nameCategory.equalsIgnoreCase("racunar") || ItemsAccount.Article.PodCategory.CategoryArticle.nameCategory.equalsIgnoreCase("laptop")) && (count >= 20), p : newPrice )
+		
+		//Novo pravilo
+	
+	then
+		$i.setDiscountPrecentage(5);
+    	$i.setNewPrice(p - ((p*5)/100));
+        System.out.println( "Racunari, laptopovi i televizori" );
+        
+end

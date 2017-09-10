@@ -1,0 +1,70 @@
+
+		
+		
+		<!-- ARTICLE -->
+			
+
+		<div class="box box-primary">
+			<div class="box-header with-border">
+				<h3 class="box-title">Add article</h3>
+			</div>
+			<!-- /.box-header -->
+			<!-- form start -->
+			<form role="form">
+				<div class="box-body">
+					<div class="form-group">
+						<label for="exampleInputEmail1">Article name</label>
+						<input class="form-control" type="text" ng-model="article.nameArticle" placeholder="Article name">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputEmail1">Article price</label>
+						<input class="form-control" type="text" ng-model="article.price" placeholder="Article price">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputEmail1">Available quantity</label>
+						<input class="form-control" type="text" ng-model="article.amount" placeholder="Available quantity">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputEmail1">Min allowed quantity</label>
+						<input class="form-control" type="text" ng-model="article.minState"  placeholder="Min allowed quantity">
+					</div>
+					
+					<div class="form-group">
+						<label>Article status</label>
+						<select class="form-control" ng-model="article.statusRecord">
+							<option value="true">Available</option>
+							<option value="false">Unavailable</option>
+							
+						</select>
+					</div>
+					
+					<div class="form-group">
+						<label>Article category</label>
+						<select class="form-control" ng-model="id" ng-click="radi()">
+							<option  value="" >Choose category</option>
+							<option  ng-repeat="c in category" value="{{c.id}}" >{{c.nameCategory}}</option>
+						</select>
+					</div>
+					
+					<div class="form-group">
+						<label>Subcategory</label>
+						<select class="form-control"  ng-model="article.podCategoryDTO.id">
+							<option  ng-repeat="c in podcategory" value="{{c.id}}" >{{c.namePodCateogry}}</option>
+						</select>
+					</div>
+					
+				</div>
+				<!-- /.box-body -->
+
+				<div class="box-footer">
+					<button type="submit" ng-click="addArticle()" class="btn btn-primary">Dodajte</button>
+				</div>
+			</form>
+		</div>
+		<!-- /.box -->
+	
+
+
+		
+
+
